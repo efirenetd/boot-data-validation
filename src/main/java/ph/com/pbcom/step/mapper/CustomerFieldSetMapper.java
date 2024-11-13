@@ -14,8 +14,9 @@ public class CustomerFieldSetMapper implements FieldSetMapper<Customer> {
         customer.setCoCode(fieldSet.readRawString(0));
         customer.setId(fieldSet.readRawString(1));
         customer.setMnemonic(fieldSet.readRawString(2));
-        customer.setName1(fieldSet.readRawString(3));
-        customer.setName2(fieldSet.readRawString(4));
+        customer.setShortName(fieldSet.readRawString(3));
+        customer.setName1(fieldSet.readRawString(4));
+        customer.setName2(fieldSet.readRawString(5));
         return customer;
     }
 }

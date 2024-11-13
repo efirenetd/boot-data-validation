@@ -26,26 +26,4 @@ public class BatchConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
-/*    @Bean
-    public JobRepository jobRepository(PlatformTransactionManager transactionManager) throws Exception {
-        JobRepositoryFactoryBean jobRepository = new JobRepositoryFactoryBean();
-        jobRepository.setDataSource(dataSource);
-        jobRepository.setTransactionManager(transactionManager);
-        jobRepository.setIsolationLevelForCreate("ISOLATION_READ_COMMITTED");
-        jobRepository.setTablePrefix("PBC.BATCH_");
-        jobRepository.setMaxVarCharLength(1000);
-        jobRepository.afterPropertiesSet();
-        return jobRepository.getObject();
-    }*/
-/*
-
-    @Bean
-    protected JobExplorer jobExplorer(PlatformTransactionManager transactionManager) throws Exception {
-        JobExplorerFactoryBean jobExplorer = new JobExplorerFactoryBean();
-        jobExplorer.setDataSource(dataSource);
-        jobExplorer.setTransactionManager(transactionManager);
-        jobExplorer.setTablePrefix("PBC.BATCH_");
-        jobExplorer.afterPropertiesSet();
-        return jobExplorer.getObject();
-    }*/
 }

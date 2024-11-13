@@ -1,9 +1,11 @@
 package ph.com.pbcom.step;
 
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -31,16 +33,18 @@ public class StepConfig {
     @Autowired
     private FieldSetMapper<Customer> customerFieldSetMapper;
 
+    @Autowired
+    private ItemWriter<Customer> customerItemWriter;
+
     @Bean
-    public Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Step step(JobRepository jobRepository,
+                     PlatformTransactionManager transactionManager) {
 
         return new StepBuilder("step", jobRepository)
                 .<Customer, Customer>chunk(maxChunk, transactionManager)
                 .reader(reader())
                 .processor(new PassThroughItemProcessor<Customer>())
-                .writer(e -> {
-                    System.out.println("WRITE WRITE");
-                })
+                .writer(customerItemWriter)
                 .build();
     }
     @Bean
@@ -55,5 +59,13 @@ public class StepConfig {
         }});
         return reader;
     }
+/*
+    @Bean
+    public RepositoryItemWriter<Customer> write() {
+        RepositoryItemWriter<Customer> writer = new RepositoryItemWriter<>();
+        writer.setRepository(customerRepository);
+        writer.setMethodName("save");
+        return writer;
+    }*/
 
 }

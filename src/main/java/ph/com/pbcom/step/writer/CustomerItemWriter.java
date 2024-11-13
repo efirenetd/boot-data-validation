@@ -17,6 +17,6 @@ public class CustomerItemWriter implements ItemWriter<Customer> {
 
     @Override
     public void write(Chunk<? extends Customer> chunk) throws Exception {
-
+        customerRepository.saveAll(chunk.getItems());
     }
 }
