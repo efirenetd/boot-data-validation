@@ -5,7 +5,6 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,9 +13,9 @@ public class JobConfig {
 
 
     @Bean
-    public Job job(JobRepository jobRepository, Step step) {
+    public Job job(JobRepository jobRepository, Step step, Step dataValidationStep) {
         return new JobBuilder("dataValidateJob", jobRepository)
-                .start(step)
+                .start(step).next(dataValidationStep)
                 .incrementer(new RunIdIncrementer())
                 //.listener(jobListener)
                 .build();

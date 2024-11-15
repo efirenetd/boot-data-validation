@@ -1,12 +1,11 @@
 package ph.com.pbcom.step;
 
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemWriter;
-import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
@@ -26,31 +25,31 @@ public class StepConfig {
     @Value("${max.chunk}")
     private int maxChunk;
 
-    @Value("${file.customer1}")
-    private String customerFile1;
-
-
     @Autowired
     private FieldSetMapper<Customer> customerFieldSetMapper;
 
     @Autowired
     private ItemWriter<Customer> customerItemWriter;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Bean
     public Step step(JobRepository jobRepository,
-                     PlatformTransactionManager transactionManager) {
+                     PlatformTransactionManager transactionManager,
+                     @Value("${file.customer1}") String filePath) {
 
         return new StepBuilder("step", jobRepository)
                 .<Customer, Customer>chunk(maxChunk, transactionManager)
-                .reader(reader())
+                .reader(reader(filePath))
                 .processor(new PassThroughItemProcessor<Customer>())
-                .writer(customerItemWriter)
+                .writer(write())
                 .build();
     }
     @Bean
-    public FlatFileItemReader<Customer> reader() {
+    public FlatFileItemReader<Customer> reader(String path) {
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource(customerFile1));
+        reader.setResource(new ClassPathResource(path));
         reader.setLinesToSkip(1);
 
         reader.setLineMapper(new DefaultLineMapper<>() {{
@@ -59,13 +58,30 @@ public class StepConfig {
         }});
         return reader;
     }
-/*
+
     @Bean
     public RepositoryItemWriter<Customer> write() {
         RepositoryItemWriter<Customer> writer = new RepositoryItemWriter<>();
         writer.setRepository(customerRepository);
-        writer.setMethodName("save");
         return writer;
-    }*/
+    }
+
+    @Bean
+    public Step dataValidationStep(JobRepository jobRepository,
+                                   PlatformTransactionManager transactionManager,
+                                   ItemProcessor<Customer, Customer> customerProcessor,
+                                   @Value("${file.customer2}") String filePath) {
+
+        return new StepBuilder("dataValidationStep", jobRepository)
+                .<Customer, Customer>chunk(maxChunk, transactionManager)
+                .reader(reader(filePath))
+                .processor(customerProcessor)
+                .writer(c -> {
+                    System.out.printf("Customer:  "+c);
+                })
+                .build();
+    }
+
+
 
 }
