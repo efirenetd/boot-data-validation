@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: t24-data-validation
+  batch:
+    initialize-schema: ALWAYS
+    job:
+      name: dataValidateJob
+  profiles:
+    active: @activatedProperties@
+  data:
+    jpa:
+      repositories:
+        enabled: false
+# Uncomment the following line if needed
+# main:
+#   allow-bean-definition-overriding: true
+max.chunk: 100
+file:
+  customer1: /data/AFTER TRANSFORM.txt
+  customer2: /CUSTOMER_SAMPLE10.txt
+

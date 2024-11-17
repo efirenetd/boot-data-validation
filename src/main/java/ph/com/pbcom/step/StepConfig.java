@@ -1,5 +1,6 @@
 package ph.com.pbcom.step;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -19,6 +20,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 import ph.com.pbcom.model.Customer;
 import ph.com.pbcom.repository.CustomerRepository;
+
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class StepConfig {
@@ -69,11 +73,11 @@ public class StepConfig {
     @Bean
     public Step dataValidationStep(JobRepository jobRepository,
                                    PlatformTransactionManager transactionManager,
-                                   ItemProcessor<Customer, Customer> customerProcessor,
+                                   ItemProcessor<Customer, List<Map<String, ImmutablePair<String, String>>>> customerProcessor,
                                    @Value("${file.customer2}") String filePath) {
 
         return new StepBuilder("dataValidationStep", jobRepository)
-                .<Customer, Customer>chunk(maxChunk, transactionManager)
+                .<Customer, List<Map<String, ImmutablePair<String, String>>>>chunk(maxChunk, transactionManager)
                 .reader(reader(filePath))
                 .processor(customerProcessor)
                 .writer(c -> {
