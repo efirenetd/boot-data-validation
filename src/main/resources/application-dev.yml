@@ -13,7 +13,8 @@ spring:
       enabled: true
       path: /h2-console
 
-# logging:
-#  level:
+logging:
+  level:
+    ph.com.pbcom: DEBUG
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type: TRACE

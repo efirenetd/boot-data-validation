@@ -14,8 +14,25 @@ spring:
 # Uncomment the following line if needed
 # main:
 #   allow-bean-definition-overriding: true
-max.chunk: 100
+max.chunk: 10
 file:
   customer1: /data/AFTER TRANSFORM.txt
-  customer2: /CUSTOMER_SAMPLE10.txt
+  customer2: CUSTOMER_SAMPLE10.txt
+  headers:
+    - \"ID\",\"NEW ID\",\"WITH CHANGES\",
+    - \"CO CODE\",\"NEW CO CODE\",\"WITH CHANGES\",
+    - \"MNEMONIC\",\"NEW MNEMONIC\",\"WITH CHANGES\",
+    - \"SHORT NAME\",\"NEW SHORT NAME\",\"WITH CHANGES\",
+    - \"NAME1\",\"NEW NAME1\",\"WITH CHANGES\",
+    - \"NAME2\",\"NEW NAME2\",\"WITH CHANGES\"
+
+  output-recon: D:/dftenerifejr/T24 Reimplementation/Data Validation/temp/output-recon.csv
+  customer-fields:
+    - id
+    - coCode
+    - mnemonic
+    - shortName
+    - name1
+    - name2
+
 

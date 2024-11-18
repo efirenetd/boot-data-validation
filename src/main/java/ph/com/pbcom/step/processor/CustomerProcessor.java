@@ -41,14 +41,14 @@ public class CustomerProcessor implements ItemProcessor<Customer, List<Map<Strin
             result.put("name1", ImmutablePair.of(item.getName1(), customer.getName1()));
             result.put("name2", ImmutablePair.of(item.getName2(), customer.getName2()));
 
-            logger.info("=================================");
-            logger.info("ID [{}] is equal: {} ", item.getId(), item.getId().equals(customer.getId()));
-            logger.info("CO_CODE is equal: {} ", item.getCoCode().equals(customer.getCoCode()));
-            logger.info("MNEMONIC is equal: {}", item.getMnemonic().equals(customer.getMnemonic()));
-            logger.info("SHORTNAME is equal: {}" ,item.getShortName().equals(customer.getShortName()));
-            logger.info("NAME1 is equal: {} ",item.getName1().equals(customer.getName1()));
-            logger.info("NAME2 is equal: {} ", item.getName2().equals(customer.getName2()));
-            logger.info("=================================");
+            logger.debug("=================================");
+            logger.debug("ID [{}] is equal: {} ", item.getId(), item.getId().equals(customer.getId()));
+            logger.debug("CO_CODE is equal: {} ", item.getCoCode().equals(customer.getCoCode()));
+            logger.debug("MNEMONIC is equal: {}", item.getMnemonic().equals(customer.getMnemonic()));
+            logger.debug("SHORTNAME is equal: {}" ,item.getShortName().equals(customer.getShortName()));
+            logger.debug("NAME1 is equal: {} ",item.getName1().equals(customer.getName1()));
+            logger.debug("NAME2 is equal: {} ", item.getName2().equals(customer.getName2()));
+            logger.debug("=================================");
 
             compareList.add(result);
         }
