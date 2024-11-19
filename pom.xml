@@ -75,6 +75,14 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.17.0</version>
 		</dependency>
+		<!-- https://github.com/vladmihalcea/hypersistence-utils
+			Ref: https://vladmihalcea.com/map-multiple-jpa-entities-one-table-hibernate/
+		-->
+		<dependency>
+			<groupId>io.hypersistence</groupId>
+			<artifactId>hypersistence-utils-hibernate-63</artifactId>
+			<version>3.9.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

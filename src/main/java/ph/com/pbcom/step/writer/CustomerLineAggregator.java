@@ -22,10 +22,12 @@ public class CustomerLineAggregator implements LineAggregator<List<Map<String, I
         for (Map<String, ImmutablePair<String, String>> entryMap : item) {
             for ( String field : appProperties.getCustomerFields()) {
                 ImmutablePair<String, String> pairVal = entryMap.get(field);
-                sb.append("\"").append(pairVal.getLeft()).append("\"").append(",").append("\"")
-                        .append(pairVal.getRight()).append("\"").append(",")
-                        .append(pairVal.getLeft().equals(pairVal.getRight()) ? "\"NO\"" : "\"YES\"")
-                        .append(",");
+                if (pairVal != null){
+                    sb.append("\"").append(pairVal.getLeft()).append("\"").append(",").append("\"")
+                            .append(pairVal.getRight()).append("\"").append(",")
+                            .append(pairVal.getLeft().equals(pairVal.getRight()) ? "\"NO\"" : "\"YES\"")
+                            .append(",");
+                }
             }
             // Remove the trailing comma
             sb.deleteCharAt(sb.length() - 1);

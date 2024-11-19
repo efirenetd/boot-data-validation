@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
+import ph.com.pbcom.config.AppProperties;
 import ph.com.pbcom.model.Customer;
 import ph.com.pbcom.repository.CustomerRepository;
 
@@ -20,9 +21,11 @@ public class CustomerProcessor implements ItemProcessor<Customer, List<Map<Strin
 
     private CustomerRepository customerRepository;
 
+    private AppProperties props;
 
-    public CustomerProcessor(CustomerRepository customerRepository) {
+    public CustomerProcessor(CustomerRepository customerRepository, AppProperties props) {
         this.customerRepository = customerRepository;
+        this.props = props;
     }
 
     @Override
@@ -40,6 +43,11 @@ public class CustomerProcessor implements ItemProcessor<Customer, List<Map<Strin
             result.put("shortName", ImmutablePair.of(item.getShortName(), customer.getShortName()));
             result.put("name1", ImmutablePair.of(item.getName1(), customer.getName1()));
             result.put("name2", ImmutablePair.of(item.getName2(), customer.getName2()));
+
+            for (int i = 6; i < props.getCustomerFields().size() - 6; i++) {
+                String key = props.getCustomerFields().get(i);
+                result.put(key, ImmutablePair.of(item.getProperties().get(key), customer.getProperties().get(key)));
+            }
 
             logger.debug("=================================");
             logger.debug("ID [{}] is equal: {} ", item.getId(), item.getId().equals(customer.getId()));
