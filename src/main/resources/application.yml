@@ -18,6 +18,7 @@ max.chunk: 10
 file:
   customer1: D:/dftenerifejr/T24 Reimplementation/Data Validation/samplefiles/AFTER TRANSFORM.txt
   customer2: D:/dftenerifejr/T24 Reimplementation/Data Validation/samplefiles/CUSTOMER_SAMPLE10.txt
+  output-recon: D:/dftenerifejr/T24 Reimplementation/Data Validation/temp/output-recon.csv
   headers:
     - ID,NEW ID,WITH CHANGES,
     - CO CODE,NEW CO CODE,WITH CHANGES,
@@ -346,7 +347,6 @@ file:
     - L COMP CODE,NEW L COMP CODE,WITH CHANGES,
     - L CUST INSTRUCT,NEW L CUST INSTRUCT,WITH CHANGES
 
-  output-recon: D:/dftenerifejr/T24 Reimplementation/Data Validation/temp/output-recon.csv
   customer-fields:
     - id
     - coCode
