@@ -34,28 +34,30 @@ public class CustomerProcessor implements ItemProcessor<Customer, List<Map<Strin
         List<Map<String, ImmutablePair<String, String>>> compareList = new ArrayList<>();
         var byId = customerRepository.findById(item.getId());
         if (byId.isPresent()) {
-            Customer customer = byId.get();
+            Customer newcustomer = byId.get();
             Map<String, ImmutablePair<String, String>> result = new HashMap<>();
 
-            result.put("id", ImmutablePair.of(item.getId(), customer.getId()));
-            result.put("coCode", ImmutablePair.of(item.getCoCode(), customer.getCoCode()));
-            result.put("mnemonic", ImmutablePair.of(item.getMnemonic(), customer.getMnemonic()));
-            result.put("shortName", ImmutablePair.of(item.getShortName(), customer.getShortName()));
-            result.put("name1", ImmutablePair.of(item.getName1(), customer.getName1()));
-            result.put("name2", ImmutablePair.of(item.getName2(), customer.getName2()));
+            result.put("id", ImmutablePair.of(item.getId(), newcustomer.getId()));
+            result.put("coCode", ImmutablePair.of(item.getCoCode(), newcustomer.getCoCode()));
+            result.put("mnemonic", ImmutablePair.of(item.getMnemonic(), newcustomer.getMnemonic()));
+            result.put("shortName", ImmutablePair.of(item.getShortName(), newcustomer.getShortName()));
+            result.put("name1", ImmutablePair.of(item.getName1(), newcustomer.getName1()));
+            result.put("name2", ImmutablePair.of(item.getName2(), newcustomer.getName2()));
 
+/*
             for (int i = 6; i < props.getCustomerFields().size() - 6; i++) {
                 String key = props.getCustomerFields().get(i);
-                result.put(key, ImmutablePair.of(item.getProperties().get(key), customer.getProperties().get(key)));
+                result.put(key, ImmutablePair.of(item.getProperties().get(key), newcustomer.getProperties().get(key)));
             }
+*/
 
             logger.debug("=================================");
-            logger.debug("ID [{}] is equal: {} ", item.getId(), item.getId().equals(customer.getId()));
-            logger.debug("CO_CODE is equal: {} ", item.getCoCode().equals(customer.getCoCode()));
-            logger.debug("MNEMONIC is equal: {}", item.getMnemonic().equals(customer.getMnemonic()));
-            logger.debug("SHORTNAME is equal: {}" ,item.getShortName().equals(customer.getShortName()));
-            logger.debug("NAME1 is equal: {} ",item.getName1().equals(customer.getName1()));
-            logger.debug("NAME2 is equal: {} ", item.getName2().equals(customer.getName2()));
+            logger.debug("ID [{}] is equal: {} ", item.getId(), item.getId().equals(newcustomer.getId()));
+            logger.debug("CO_CODE is equal: {} ", item.getCoCode().equals(newcustomer.getCoCode()));
+            logger.debug("MNEMONIC is equal: {}", item.getMnemonic().equals(newcustomer.getMnemonic()));
+            logger.debug("SHORTNAME is equal: {}" ,item.getShortName().equals(newcustomer.getShortName()));
+            logger.debug("NAME1 is equal: {} ",item.getName1().equals(newcustomer.getName1()));
+            logger.debug("NAME2 is equal: {} ", item.getName2().equals(newcustomer.getName2()));
             logger.debug("=================================");
 
             compareList.add(result);

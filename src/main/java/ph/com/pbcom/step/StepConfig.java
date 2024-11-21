@@ -65,7 +65,7 @@ public class StepConfig {
     @Bean
     public FlatFileItemReader<Customer> reader(String path) {
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource(path));
+        reader.setResource(new FileSystemResource(path));
         reader.setLinesToSkip(1);
 
         reader.setLineMapper(new DefaultLineMapper<>() {{
@@ -78,7 +78,7 @@ public class StepConfig {
     @Bean
     public FlatFileItemReader<Customer> customerReader(String path) {
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource(path));
+        reader.setResource(new FileSystemResource(path));
         reader.setLinesToSkip(1);
 
         reader.setLineMapper(new DefaultLineMapper<>() {{
@@ -116,11 +116,19 @@ public class StepConfig {
 
         FlatFileItemWriter<List<Map<String, ImmutablePair<String, String>>>> writer = new FlatFileItemWriter<>();
         writer.setResource(new FileSystemResource(props.getOutputRecon()));
-        writer.setHeaderCallback(w -> w.write(StringUtils.join(props.getHeaders().toArray()).replace("\\","")));
+        String[] headerName = StringUtils.join(props.getHeaders().toArray()).split(",");
+        writer.setHeaderCallback(w -> w.write(addQuote(headerName)));
         writer.setLineAggregator(customerLineAggregator);
 
         return writer;
     }
 
+    private String addQuote(String[] names) {
+        StringBuilder sb = new StringBuilder();
+        for (String word : names) {
+            sb.append("\"").append(word.trim()).append("\",");
+        }
+        return sb.toString().substring(0, sb.length() - 1); // Remove the trailing comma
+    }
 
 }

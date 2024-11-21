@@ -28,13 +28,13 @@ public class CustomerFieldSetMapper implements FieldSetMapper<Customer> {
         customer.setName1(fieldSet.readRawString(4));
         customer.setName2(fieldSet.readRawString(5));
 
-        Map<String, String> customerProperties = new HashMap<>();
+/*        Map<String, String> customerProperties = new HashMap<>();
 
         for (int i = 6; i < props.getCustomerFields().size() - 6; i++) {
             customerProperties.put(props.getCustomerFields().get(i), fieldSet.readRawString(i));
         }
 
-        customer.setProperties(customerProperties);
+        customer.setProperties(customerProperties);*/
 
         return customer;
     }
