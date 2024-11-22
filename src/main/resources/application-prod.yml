@@ -8,15 +8,14 @@ spring:
     # database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  main:
+    log-startup-info: false
 
 max.chunk: 10
 
 logging:
   level:
+    root: ERROR
     ph.com.pbcom: INFO
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type: TRACE

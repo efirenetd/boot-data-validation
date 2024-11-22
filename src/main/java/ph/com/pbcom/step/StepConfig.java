@@ -51,19 +51,19 @@ public class StepConfig {
     private AppProperties props;
 
     @Bean
-    public Step step(JobRepository jobRepository,
+    public Step loadCustomerDataStep(JobRepository jobRepository,
                      PlatformTransactionManager transactionManager,
                      @Value("${file.customer1}") String filePath) {
 
-        return new StepBuilder("step", jobRepository)
+        return new StepBuilder("loadCustomerDataStep", jobRepository)
                 .<Customer, Customer>chunk(maxChunk, transactionManager)
-                .reader(reader(filePath))
+                .reader(customerTransformReader(filePath))
                 .processor(new PassThroughItemProcessor<Customer>())
                 .writer(write())
                 .build();
     }
     @Bean
-    public FlatFileItemReader<Customer> reader(String path) {
+    public FlatFileItemReader<Customer> customerTransformReader(String path) {
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
         reader.setResource(new FileSystemResource(path));
         reader.setLinesToSkip(1);
@@ -76,7 +76,7 @@ public class StepConfig {
     }
 
     @Bean
-    public FlatFileItemReader<Customer> customerReader(String path) {
+    public FlatFileItemReader<Customer> customerT24Reader(String path) {
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
         reader.setResource(new FileSystemResource(path));
         reader.setLinesToSkip(1);
@@ -104,7 +104,7 @@ public class StepConfig {
 
         return new StepBuilder("dataValidationStep", jobRepository)
                 .<Customer, List<Map<String, ImmutablePair<String, String>>>>chunk(maxChunk, transactionManager)
-                .reader(customerReader(filePath))
+                .reader(customerT24Reader(filePath))
                 .processor(customerProcessor)
                 .writer(customerReconciliationWriter)
                 .build();

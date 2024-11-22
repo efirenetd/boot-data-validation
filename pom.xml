@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ph.com.pbcom</groupId>
 	<artifactId>boot-data-validation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>t24-data-validation</name>
 	<description>T24 Data Validation</description>
 	<url/>

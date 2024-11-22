@@ -1,6 +1,5 @@
 package ph.com.pbcom.step.mapper;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import ph.com.pbcom.config.AppProperties;
 import ph.com.pbcom.model.Customer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class CustomerFieldSetMapper implements FieldSetMapper<Customer> {
